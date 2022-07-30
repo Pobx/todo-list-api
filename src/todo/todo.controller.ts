@@ -13,46 +13,60 @@ import { ITodo, TodoData } from './todo.interface';
 
 @Controller('todo')
 export class TodoController {
-  apiDataType: ApiDataType;
-  constructor(private readonly todoService: TodoData) {
-    this.apiDataType = {
-      message: null,
-      status: '200',
-      todos: [],
-      todo: null,
-    };
-  }
+  constructor(private readonly todoService: TodoData) {}
 
   @Get('findAll')
   findAll() {
-    this.apiDataType.todos = this.todoService.findAll();
-    return this.apiDataType;
+    const apiDataType = {} as ApiDataType<ITodo[]>;
+    apiDataType.message = [];
+    apiDataType.message.push('Operation Success');
+    apiDataType.entity = this.todoService.findAll();
+
+    return apiDataType;
   }
 
   @Get('findOne')
   findOne(@Query() query: { id: number }) {
+    const apiDataType = {} as ApiDataType<ITodo>;
     const id = query.id;
-    this.apiDataType.todo = this.todoService.findOne(id);
-    return this.apiDataType;
+    apiDataType.message = [];
+    apiDataType.message.push('Operation Success');
+    apiDataType.entity = this.todoService.findOne(id);
+
+    return apiDataType;
   }
 
   @Post()
   @HttpCode(201)
   create(@Body() entity: ITodo) {
-    this.apiDataType.todo = this.todoService.create(entity);
-    return this.apiDataType;
+    const apiDataType = {} as ApiDataType<ITodo>;
+    apiDataType.message = [];
+    apiDataType.message.push('Operation Success');
+    apiDataType.entity = this.todoService.create(entity);
+
+    return apiDataType;
   }
 
   @Put()
-  @HttpCode(204)
+  @HttpCode(200)
   update(@Body() entity: ITodo) {
+    const apiDataType = {} as ApiDataType<ITodo>;
+    apiDataType.message = [];
+    apiDataType.message.push('Operation Success');
     this.todoService.update(entity);
+
+    return apiDataType;
   }
 
   @Delete()
-  @HttpCode(204)
+  @HttpCode(200)
   delete(@Query() query: { id: number }) {
     const id = query.id;
+    const apiDataType = {} as ApiDataType<ITodo>;
+
     this.todoService.delete(id);
+
+    apiDataType.message.push('Operation Success');
+    return apiDataType;
   }
 }
