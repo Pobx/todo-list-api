@@ -1,13 +1,16 @@
-export interface Todo {
+export interface ITodo {
   id?: number;
-  label: string;
-  completed: boolean;
+  name: string;
+  description: string;
+  status: boolean;
+  createdAt?: string;
+  updateAt?: string;
 }
 
 export abstract class TodoData {
-  abstract findAll(): Todo[];
-  abstract findOne(id: number): Todo;
-  abstract create(entity: Todo): Todo;
-  abstract update(entity: Todo): void;
+  abstract findAll(): ITodo[];
+  abstract findOne(id: number): ITodo;
+  abstract create(entity: ITodo): ITodo;
+  abstract update(entity: ITodo): void;
   abstract delete(id: number): void;
 }
