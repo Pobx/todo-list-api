@@ -8,27 +8,39 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
+import { ApiDataType } from 'src/models';
 import { ITodo, TodoData } from './todo.interface';
 
 @Controller('todo')
 export class TodoController {
-  constructor(private readonly todoService: TodoData) {}
+  apiDataType: ApiDataType;
+  constructor(private readonly todoService: TodoData) {
+    this.apiDataType = {
+      message: null,
+      status: '200',
+      todos: [],
+      todo: null,
+    };
+  }
 
   @Get('findAll')
   findAll() {
-    return this.todoService.findAll();
+    this.apiDataType.todos = this.todoService.findAll();
+    return this.apiDataType;
   }
 
   @Get('findOne')
   findOne(@Query() query: { id: number }) {
     const id = query.id;
-    return this.todoService.findOne(id);
+    this.apiDataType.todo = this.todoService.findOne(id);
+    return this.apiDataType;
   }
 
   @Post()
   @HttpCode(201)
   create(@Body() entity: ITodo) {
-    return this.todoService.create(entity);
+    this.apiDataType.todo = this.todoService.create(entity);
+    return this.apiDataType;
   }
 
   @Put()
