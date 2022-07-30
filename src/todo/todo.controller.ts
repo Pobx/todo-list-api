@@ -53,6 +53,7 @@ export class TodoController {
     const apiDataType = {} as ApiDataType<ITodo>;
     apiDataType.message = [];
     apiDataType.message.push('Operation Success');
+    apiDataType.entity = entity;
     this.todoService.update(entity);
 
     return apiDataType;
@@ -63,10 +64,11 @@ export class TodoController {
   delete(@Query() query: { id: number }) {
     const id = query.id;
     const apiDataType = {} as ApiDataType<ITodo>;
-
+    apiDataType.message = [];
+    apiDataType.message.push('Operation Success');
+    apiDataType.entity = null;
     this.todoService.delete(id);
 
-    apiDataType.message.push('Operation Success');
     return apiDataType;
   }
 }
