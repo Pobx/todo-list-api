@@ -13,11 +13,17 @@ export class TodoService extends TodoData {
   }
 
   findOne(id: number): ITodo {
+    let response = {} as ITodo;
     if (!id) {
-      return null;
+      return response;
     }
 
-    return this.storage.find((item) => item.id === Number(id));
+    const entity = this.storage.find((item) => item.id === Number(id));
+    if (entity) {
+      response = entity;
+    }
+
+    return response;
   }
 
   create(entity: ITodo): ITodo {
