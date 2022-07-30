@@ -8,7 +8,7 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { Todo, TodoData } from './todo.interface';
+import { ITodo, TodoData } from './todo.interface';
 
 @Controller('todo')
 export class TodoController {
@@ -27,13 +27,13 @@ export class TodoController {
 
   @Post()
   @HttpCode(201)
-  create(@Body() entity: Todo) {
+  create(@Body() entity: ITodo) {
     return this.todoService.create(entity);
   }
 
   @Put()
   @HttpCode(204)
-  update(@Body() entity: Todo) {
+  update(@Body() entity: ITodo) {
     this.todoService.update(entity);
   }
 
